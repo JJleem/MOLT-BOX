@@ -1,69 +1,31 @@
-# React + TypeScript + Vite
+# MOLT BOX
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**시각적 인터랙션과 애니메이션 기반의 UI 컴포넌트를 실험하고 수집하는 개인 프로젝트입니다.**  
+컴포넌트의 기능성보다 시각적 표현과 인터페이스의 다양성에 초점을 맞추고 있습니다.
 
-Currently, two official plugins are available:
+## 🎯 목적
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 다양한 애니메이션, 레이아웃, 인터랙션 실험
+- 실사용보다는 **시각적 아이디어 저장소** 역할
+- 개발자이자 디자이너로서의 개인 실험
 
-## Expanding the ESLint configuration
+## 🔧 기술 스택
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React + TypeScript
+- SCSS / Tailwind CSS
+- Framer Motion
+- Vite
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Cascading Card
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+스크롤 애니메이션이 적용된 수직 카드 스택 UI 컴포넌트입니다.  
+카드는 시간차를 두고 부드럽게 흘러내리며, 각 `container`는 독립적으로 애니메이션됩니다.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **개별 카드 컨테이너마다 animation delay / duration 다르게 적용**  
+- **hover 시 해당 카드 컨테이너의 애니메이션만 멈춤**  
+- **상/하단 영역에 `blur mask` 처리로 시각적 깊이감 제공**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**인터랙티브한 콘텐츠 리스트, 팀 소개, 블로그 카드 등 다양한 연출에 활용 가능합니다.**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+![Cascading Card Demo](./assets/gif/cascading-card.gif)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
