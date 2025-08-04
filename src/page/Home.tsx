@@ -11,24 +11,8 @@ const UiSourceCategory = [
     route: "/cloud-animation",
   },
   {
-    name: "CascadingCard",
-    route: "/cascading-card",
-  },
-  {
-    name: "CascadingCard",
-    route: "/cascading-card",
-  },
-  {
-    name: "CascadingCard",
-    route: "/cascading-card",
-  },
-  {
-    name: "CascadingCard",
-    route: "/cascading-card",
-  },
-  {
-    name: "CascadingCard",
-    route: "/cascading-card",
+    name: "InteractionSlide",
+    route: "/interaction-slide",
   },
 ];
 
