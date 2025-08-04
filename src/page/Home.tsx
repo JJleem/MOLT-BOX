@@ -7,8 +7,8 @@ const UiSourceCategory = [
     route: "/cascading-card",
   },
   {
-    name: "CascadingCard",
-    route: "/cascading-card",
+    name: "CloudAnimation",
+    route: "/cloud-animation",
   },
   {
     name: "CascadingCard",
