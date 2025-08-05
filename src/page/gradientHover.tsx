@@ -1,48 +1,62 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../styles/gradientHover.scss";
 
-const GradientHover = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isNear, setIsNear] = useState(false);
+const GradientHover: React.FC = () => {
+  const refs = useRef<HTMLDivElement[]>([]);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [near, setNear] = useState<boolean[]>([false, false, false]);
+  const BUFFER = 100; // px
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
+  // 전역 마우스 무브 핸들러
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const newNear = refs.current.map((el) => {
+        if (!el) return false;
+        const r = el.getBoundingClientRect();
+        return (
+          e.clientX >= r.left - BUFFER &&
+          e.clientX <= r.right + BUFFER &&
+          e.clientY >= r.top - BUFFER &&
+          e.clientY <= r.bottom + BUFFER
+        );
+      });
+      setNear(newNear);
 
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+      newNear.forEach((isN, i) => {
+        if (isN || hovered === i) {
+          const el = refs.current[i];
+          const r = el.getBoundingClientRect();
+          const x = ((e.clientX - r.left) / r.width) * 100;
+          const y = ((e.clientY - r.top) / r.height) * 100;
+          el.style.setProperty("--x", `${x}%`);
+          el.style.setProperty("--y", `${y}%`);
+        }
+      });
+    };
 
-    const buffer = 100; // px 거리 내 근처로 간주
-    const isInsideExtended =
-      e.clientX >= rect.left - buffer &&
-      e.clientX <= rect.right + buffer &&
-      e.clientY >= rect.top - buffer &&
-      e.clientY <= rect.bottom + buffer;
-
-    setIsNear(isInsideExtended);
-
-    containerRef.current?.style.setProperty("--x", `${x}%`);
-    containerRef.current?.style.setProperty("--y", `${y}%`);
-  };
-
-  const handleMouseLeave = () => {
-    setIsNear(false);
-    setIsHovered(false);
-  };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [hovered]);
 
   return (
-    <div className="gradient-hover-wrapper" onMouseMove={handleMouseMove}>
-      <div
-        className={`gradient-hover-target ${isHovered ? "hovered" : ""} ${
-          isNear ? "near" : ""
-        }`}
-        ref={containerRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-      >
-        <span className="content">Hover me</span>
-      </div>
+    <div className="gradient-hover-wrapper">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div
+          key={i}
+          ref={(el) => {
+            if (el) {
+              refs.current[i] = el;
+            }
+          }}
+          className={`gradient-hover-target ${near[i] ? "near" : ""} ${
+            hovered === i ? "hovered" : ""
+          }`}
+          onMouseEnter={() => setHovered(i)}
+          onMouseLeave={() => setHovered(null)}
+        >
+          <span className="content">Box {i + 1}</span>
+        </div>
+      ))}
     </div>
   );
 };
