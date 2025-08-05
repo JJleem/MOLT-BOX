@@ -4,6 +4,7 @@ import CascadingCard from "../page/CascadingCard";
 import Home from "../page/Home";
 import CloudAnimation from "../page/CloudAnimation";
 import InteractionSlide from "../page/InteractionSlice";
+import GradientHover from "../page/gradientHover";
 
 export default function RouterView() {
   return (
@@ -13,6 +14,7 @@ export default function RouterView() {
         <Route path="/cascading-card" element={<CascadingCard />} />
         <Route path="/cloud-animation" element={<CloudAnimation />} />
         <Route path="/interaction-slide" element={<InteractionSlide />} />
+        <Route path="/gradient-hover" element={<GradientHover />} />
       </Routes>
     </main>
   );

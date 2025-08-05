@@ -14,6 +14,10 @@ const UiSourceCategory = [
     name: "InteractionSlide",
     route: "/interaction-slide",
   },
+  {
+    name: "GradientHover",
+    route: "/gradient-hover",
+  },
 ];
 
 const Home = () => {
