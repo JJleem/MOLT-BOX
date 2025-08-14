@@ -1,6 +1,6 @@
 .gradient-hover-wrapper {
-  width: 100vw; /* 전체 화면 커버 */
-  height: 100vh; /* 전체 화면 커버 */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,71 +9,90 @@
 }
 
 .gradient-hover-target {
+  /* 공통 팔레트 */
+  // --c1: #dd7bbb;
+  // --c2: #d79f1e;
+  // --c3: #5a922c;
+  // --c4: #4c7894;
+  --c1: #40ff5a;
+  --c2: #b3f0ff;
+  --c3: #67edff;
+  --c4: #20adff;
+  --c5: #7e6bff;
+  --halo: rgba(190, 175, 255, 0.35);
+  --ring: conic-gradient(
+    from 236.84deg at 50% 50%,
+    var(--c1) 0%,
+    var(--c2) 20%,
+    var(--c3) 40%,
+    var(--c4) 60%,
+    var(--c5) 80%,
+    var(--c1) 100%
+  );
+
+  --glow: 0;
+  --spot: 200px; /* JS에서 업데이트 */
+  --feather: 44px;
+  --x: 50%;
+  --y: 50%;
+
+  /* ✨ 추가: hover 전개용 반경 + 끝 페더링(양끝 blur 길이) */
+  --reveal: var(--spot);
+  --taper: 16px;
+
+  /* 강도(필요 시 조절) */
+  --near-contrast: 1.35;
+  --near-saturate: 1.25;
+  --near-bright: 1.05;
+  --hover-contrast: 1.6;
+  --hover-saturate: 1.3;
+  --hover-bright: 1.08;
+
   position: relative;
   padding: 100px 150px;
   background: #111;
-  border: 1px solid #666;
+  border: 1px solid #808080;
+  filter: saturate(100px) sepia(200%) drop-shadow(100%);
   border-radius: 6px;
   overflow: hidden;
   cursor: pointer;
+  contain: paint;
 
-  // spotlight
+  /* 💡 부드러운 퍼짐(양끝 페더 느낌 보조) */
   &::before {
     content: "";
     position: absolute;
     inset: 0;
-    padding: 1px; // border 두께
+    padding: 1px;
     border-radius: inherit;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
 
-    // content-box 내부는 숨기고, 테두리 1px만 보여줘라
+    /* border만 표시 */
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
 
+    /* 메인 반경보다 살짝 크게 → 끝이 자연스럽게 흐려짐 */
+    clip-path: circle(
+      calc(var(--reveal) + var(--taper)) at var(--x, 50%) var(--y, 50%)
+    );
+
+    /* 색은 섞지 않고 "밝기"만 더해 빛처럼 (음영 X) */
     background: radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #dd7bbbff 10%,
-        #dd7bbb00 20%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #d79f1eff 5%,
-        #d79f1e00 15%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #5a922cff 10%,
-        #5a922c00 20%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #4c7894ff 10%,
-        #4c789400 20%
-      ),
-      repeating-conic-gradient(
-        from 236.84deg at var(--x, 50%) var(--y, 50%),
-        #dd7bbb 0%,
-        #d79f1e 25%,
-        #5a922c 50%,
-        #4c7894 75%,
-        #dd7bbb 100%
-      );
-    background-repeat: no-repeat;
-    background-size: 80px 80px;
-    background-position: var(--x, 50%) var(--y, 50%);
-    filter: blur(0.5px);
-  }
-  &.near::before {
-    opacity: 1; /* 근처일 때만 보이기 */
-  }
-  &.hovered::before {
-    opacity: 0; /* hover 시 spotlight 끄기 */
+      circle at var(--x, 50%) var(--y, 50%),
+      var(--halo) 0%,
+      rgba(255, 255, 255, 0) 55%
+    );
+    mix-blend-mode: plus-lighter; /* 미지원이면 screen */
+
+    opacity: calc(var(--glow) * 0.55);
+    filter: blur(12px);
+    transition: opacity 160ms ease-out,
+      clip-path 260ms cubic-bezier(0.2, 0.7, 0, 1), filter 160ms ease-out;
+    will-change: opacity, clip-path, filter;
   }
 
-  // full-border gradient
+  /* 🎯 메인 테두리(선) */
   &::after {
     content: "";
     position: absolute;
@@ -81,47 +100,66 @@
     padding: 1px;
     border-radius: inherit;
     pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    /* mask는 여기만 유지 */
+
+    /* border만 표시 */
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
 
-    background: radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #dd7bbbff 10%,
-        #dd7bbb00 20%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #d79f1eff 5%,
-        #d79f1e00 15%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #5a922cff 10%,
-        #5a922c00 20%
-      ),
-      radial-gradient(
-        circle at var(--x, 50%) var(--y, 50%),
-        #4c7894ff 10%,
-        #4c789400 20%
-      ),
-      repeating-conic-gradient(
-        from 236.84deg at var(--x, 50%) var(--y, 50%),
-        #dd7bbb 0%,
-        #d79f1e 25%,
-        #5a922c 50%,
-        #4c7894 75%,
-        #dd7bbb 100%
-      );
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-position: center;
+    /* ⛳ 반경 애니메이션으로 hover 전개 (none 사용 안 함) */
+    clip-path: circle(var(--reveal) at var(--x, 50%) var(--y, 50%));
+
+    background: var(--ring);
+    opacity: var(--glow);
+    filter: blur(12px);
+
+    /* hover 전개가 부드럽게 보이도록 clip-path/opacity 트랜지션 강화 */
+    transition: clip-path 320ms cubic-bezier(0.2, 0.7, 0, 1),
+      opacity 180ms ease-out, filter 140ms ease-out;
+    will-change: clip-path, opacity, filter;
   }
-  &.hovered::after {
-    opacity: 1; /* hover 시 full-border on */
+
+  /* 기본: 안 보임 */
+  &:not(.hovered):not(.near) {
+    &::before,
+    &::after {
+      opacity: 0;
+    }
+  }
+
+  /* 🟡 NEAR — “삭” + 양끝 자연스러운 페더 */
+  &.near:not(.hovered) {
+    &::before {
+      /* 끝만 살짝 퍼지는 느낌 */
+      opacity: calc(var(--glow) * 0.55);
+      filter: blur(14px);
+    }
+    &::after {
+      opacity: calc(var(--glow) * 0.98);
+      /* 선 또렷 + 쎄게 */
+      filter: contrast(var(--near-contrast)) saturate(var(--near-saturate))
+        brightness(var(--near-bright));
+    }
+  }
+
+  /* 🟢 HOVER — 전체 라인 “펼쳐지는” 트랜지션 + 동일 팔레트 유지 */
+  &.hovered {
+    /* 요소 전체를 충분히 덮는 큰 반경으로 스무스하게 확장 */
+    --reveal: 180%;
+    &::before,
+    &::after {
+      opacity: 1;
+      /* clip-path는 위에서 --reveal로 애니메이션됨 */
+    }
+    &::after {
+      filter: contrast(var(--hover-contrast)) saturate(var(--hover-saturate))
+        brightness(var(--hover-bright));
+    }
+    /* hover에선 살짝만 퍼지게(더 또렷하게 보이도록) */
+    &::before {
+      filter: blur(8px);
+      opacity: 0.35;
+    }
   }
 }
 
@@ -131,4 +169,12 @@
   color: #fff;
   font-size: 24px;
   font-weight: bold;
+}
+
+/* 모션 최소화 환경 */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-hover-target::before,
+  .gradient-hover-target::after {
+    transition: none !important;
+  }
 }
