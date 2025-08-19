@@ -5,6 +5,7 @@ import Home from "../page/Home";
 import CloudAnimation from "../page/CloudAnimation";
 import InteractionSlide from "../page/InteractionSlice";
 import GradientHover from "../page/gradientHover";
+import HoverVideo from "../page/HoverVideo";
 
 export default function RouterView() {
   return (
@@ -15,6 +16,7 @@ export default function RouterView() {
         <Route path="/cloud-animation" element={<CloudAnimation />} />
         <Route path="/interaction-slide" element={<InteractionSlide />} />
         <Route path="/gradient-hover" element={<GradientHover />} />
+        <Route path="/hover-video" element={<HoverVideo />} />
       </Routes>
     </main>
   );

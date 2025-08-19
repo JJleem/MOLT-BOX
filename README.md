@@ -75,3 +75,19 @@ Three.js 기반으로 구현된 몰입형 클라우드 애니메이션 컴포넌
 인포 카드, 버튼/패널 하이라이트, 인터랙티브 히어로 섹션, 네온 테마 UI 등 다양한 상황에 적용할 수 있습니다.
 
 ![Gradient Hover Demo](./assets/gif/gradientHover.gif)
+
+## HoverVideo
+
+메탈릭 베젤·쉰(sheen) 효과를 입힌 **호버/탭 재생 비디오 타일 갤러리**입니다.  
+각 타일은 호버/포커스 시 재생되고, 벗어나면 부드럽게 정지·리셋됩니다.
+
+- **호버/포커스 재생:** 마우스 호버·키보드 포커스·모바일 탭 → 재생, 아웃·블러 → 일시정지+0초 리셋
+- **메탈릭 룩 & 필:** `conic-gradient` 크롬 베젤과 라이트 쉰(sheen), 다크 메탈 배경
+- **라벨 오버레이:** 상태 텍스트 대신 **번호 배지(1–6) + 캡션**을 고스트 메탈 스타일로 표시
+- **반응형 그리드:** 1·2 스택 혼합 레이아웃, 모바일에서 단일 컬럼 전환
+- **접근성:** `tabIndex`, `aria-label`, Enter/Space 제어, 포커스 링
+- **성능 최적화:** `IntersectionObserver`로 뷰포트 밖 자동 정지, `preload="metadata"`
+- **모션 배려:** `prefers-reduced-motion` 시 쉰(sheen) 애니 전체 비활성화
+- **간단한 사용:** `/public/videos/1~n.mp4` 준비 → 컴포넌트의 `cols` 배열만 수정
+
+![HoverVideo Demo](./assets/gif/hoverVideo.gif)

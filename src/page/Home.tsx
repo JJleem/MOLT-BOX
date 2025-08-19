@@ -18,6 +18,10 @@ const UiSourceCategory = [
     name: "GradientHover",
     route: "/gradient-hover",
   },
+  {
+    name: "HoverVideo",
+    route: "/hover-video",
+  },
 ];
 
 const Home = () => {
