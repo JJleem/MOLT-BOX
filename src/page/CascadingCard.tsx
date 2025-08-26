@@ -1,8 +1,10 @@
 import React from "react";
 import "../styles/cascadingCard.scss";
+
 const CascadingCard = () => {
   const containerCount = 5;
   const cardCount = 10;
+
   return (
     <div className="test2-container">
       <div className="container">

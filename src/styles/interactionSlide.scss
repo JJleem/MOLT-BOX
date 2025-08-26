@@ -38,6 +38,7 @@
 .SlideItem {
   width: 100%;
   height: 100%;
+  background: #fff;
   /* 
     aspect-ratio가 지정되면 grid 셀의 높이와 맞지 않을 수 있으므로, 
     grid 셀에 맞게 아이템이 채워지도록 하거나 object-fit 등을 사용

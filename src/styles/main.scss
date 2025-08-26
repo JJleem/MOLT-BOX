@@ -133,3 +133,25 @@ li {
   height: 100vh;
   background-color: #fff;
 }
+.global-bg {
+  position: fixed;
+  inset: 0;
+  inset: -10%;
+  background: radial-gradient(
+      60% 60% at 15% 10%,
+      rgba(143, 51, 216, 0.28),
+      transparent 60%
+    ),
+    radial-gradient(
+      50% 50% at 85% 15%,
+      rgba(20, 120, 255, 0.18),
+      transparent 65%
+    ),
+    linear-gradient(180deg, #f7f5fb 0%, #ece7f6 100%);
+  z-index: -1;
+}
+.main {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}

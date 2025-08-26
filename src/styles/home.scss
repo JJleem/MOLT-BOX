@@ -8,6 +8,12 @@
   place-items: center;
   isolation: isolate; /* ✅ z-index 스택 분리로 레이어 예측 가능 */
 }
+.tch-scene {
+  position: absolute;
+  inset: 0; /* top/right/bottom/left: 0 */
+  z-index: 3; /* 배경(0~2)보다 위, 패널(보통 5)보단 아래 */
+  /* 필요시 pointer-events: none;  // 큐브 클릭 막지 않게 할 거면 빼세요 */
+}
 .tch-canvas {
   position: relative;
   z-index: 3; /* 배경(0~2) 위, 패널(5) 아래 */
@@ -129,6 +135,9 @@
   height: 100%;
   object-fit: cover;
   opacity: 1;
+  filter: blur(1px) brightness(0.3) contrast(1.1);
+  mix-blend-mode: multiply; /* 배경색과 곱하기 */
+
   transform: translateZ(0); /* GPU 합성 힌트 */
   pointer-events: none;
   z-index: 0;
@@ -152,25 +161,26 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow: auto;
+  overflow: hidden;
   display: grid;
   gap: 8px;
-
+  width: 100%;
+  height: 100%;
   /* 상하단 페이드 마스크(스크롤 초경량 시각 보정) */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    #000 10px,
-    #000 calc(100% - 10px),
-    transparent
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    #000 10px,
-    #000 calc(100% - 10px),
-    transparent
-  );
+  // -webkit-mask-image: linear-gradient(
+  //   to bottom,
+  //   transparent,
+  //   #000 10px,
+  //   #000 calc(100% - 10px),
+  //   transparent
+  // );
+  // mask-image: linear-gradient(
+  //   to bottom,
+  //   transparent,
+  //   #000 10px,
+  //   #000 calc(100% - 10px),
+  //   transparent
+  // );
 
   /* 스크롤바 최소화 */
   scrollbar-width: thin;
@@ -194,21 +204,61 @@
   padding: 12px 14px;
   position: relative;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 .tch-link {
   text-decoration: none;
-  color: #2a1242;
+  color: #8f33d8;
+  font-size: 16px;
   font-weight: 800;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   letter-spacing: 0.15px;
+  opacity: 1;
+  z-index: 100;
+  color: transparent; /* 텍스트 컬러 대신 배경으로 채움 */
+  background: linear-gradient(
+    90deg,
+    #d9c4ff 0%,
+    #8f33d8 25%,
+    #ffffff 50%,
+    #8f33d8 75%,
+    #d9c4ff 100%
+  );
 
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shineMove 4s linear infinite; /* 빛이 움직이는 효과 */
+  text-shadow: 0 0 6px rgba(143, 51, 216, 0.4); /* 살짝 글로우 */
+  transition: transform 0.25s ease;
   &:hover {
     text-decoration: underline;
   }
 }
+@keyframes shineMove {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
 
+.tch-link:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 10px rgba(143, 51, 216, 0.7),
+    0 0 20px rgba(255, 255, 255, 0.6);
+}
 .tch-hint {
   color: #4a2c6f;
   font-size: 12.5px;
@@ -219,6 +269,7 @@
 /* 모바일(좁은 폭): 패널을 바텀시트처럼 */
 @media (max-width: 640px) {
   .tch-panel {
+    background: transparent;
     inset: auto 0 0 0;
     height: min(48vh, 420px);
     width: 100%;
@@ -226,4 +277,13 @@
     border-top: 1px solid rgba(134, 62, 195, 0.18);
     box-shadow: 0 -10px 26px rgba(0, 0, 0, 0.12);
   }
+}
+
+.tch-wrap {
+  height: 100dvh;
+} /* 최신 브라우저 */
+@supports not (height: 100dvh) {
+  .tch-wrap {
+    height: 100svh;
+  } /* 폴백 */
 }
