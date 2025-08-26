@@ -12,9 +12,10 @@
 ## 🔧 기술 스택
 
 - React + TypeScript
-- SCSS / Tailwind CSS
+- SCSS
 - Framer Motion
 - Vite
+- three.js
 
 ## Cascading Card
 

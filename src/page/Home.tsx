@@ -138,9 +138,9 @@ const RightPanel: React.FC<{ open: boolean }> = ({ open }) => {
                 className="tch-item"
                 variants={itemVariants}
                 layout="position" // 재배치도 자연스럽게
-                whileHover={{ y: -1, scale: 1.01 }}
-                whileTap={{ scale: 0.985 }}
-                transition={{ type: "spring", stiffness: 600, damping: 30 }}
+                // whileHover={{ y: -1, scale: 1.01 }}
+                // whileTap={{ scale: 0.985 }}
+                // transition={{ type: "spring", stiffness: 600, damping: 30 }}
               >
                 <img
                   className="tch-panel-bgimg"
