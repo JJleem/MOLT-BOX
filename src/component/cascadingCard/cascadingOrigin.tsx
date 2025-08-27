@@ -20,27 +20,6 @@ const CascadingCard = () => {
               {Array.from({ length: cardCount }).map((_, j) => {
                 return (
                   <div className="card" key={j}>
-                    <div className="card-inner">
-                      <div className="card-p">
-                        I really like how Cursor suggests edits to existing
-                        code. It noticed I was inconsistent with my markup and
-                        popped up this suggestion that matched my other items!
-                      </div>
-                      <div className="card-profile">
-                        <div className="card-img">
-                          <img
-                            src={`src/assets/interactionSlide/${j + i * 2}.png`}
-                            alt="d"
-                          />
-                        </div>
-                        <div className="card-tag">
-                          <p className="card-name">Josh Miller</p>
-                          <span className="card-company">
-                            The Browser Company
-                          </span>
-                        </div>
-                      </div>
-                    </div>
                     <svg
                       className="testsvg"
                       fill="none"

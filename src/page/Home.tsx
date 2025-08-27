@@ -70,7 +70,14 @@ const Cube: React.FC<{ open: boolean; onToggle: () => void }> = ({
     tiltY: open ? 0.26 : hovered ? 0.18 : 0.08,
     config: { tension: 150, friction: 17 },
   });
-
+  const p = {
+    color: "#267899", // Anodized Violet
+    roughness: 0,
+    metalness: 0.4,
+    envMapIntensity: 0.35,
+    clearcoat: 0.4,
+    clearcoatRoughness: 0.2,
+  };
   return (
     <a.group ref={spinRef}>
       <a.group scale={scale} rotation-x={tiltX} rotation-y={tiltY}>
@@ -84,10 +91,16 @@ const Cube: React.FC<{ open: boolean; onToggle: () => void }> = ({
           onPointerOut={() => setHovered(false)}
           onClick={onToggle}
         >
-          <meshStandardMaterial
-            color="#8f33d8"
-            roughness={0.05}
-            metalness={0.08}
+          <meshPhysicalMaterial
+            color={p.color}
+            roughness={p.roughness}
+            metalness={p.metalness}
+            envMapIntensity={p.envMapIntensity}
+            clearcoat={p.clearcoat}
+            clearcoatRoughness={p.clearcoatRoughness}
+            // 선택: 아주 살짝 띄우고 싶으면
+            emissive="rgb(33, 40, 48)"
+            emissiveIntensity={0.5}
           />
         </RoundedBox>
       </a.group>
@@ -187,7 +200,10 @@ const RightPanel: React.FC<{ open: boolean; onClose: () => void }> = ({
 /* ────────────── 페이지 ────────────── */
 const Home: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const bgClass = useMemo(() => (open ? "tch-wrap open" : "tch-wrap"), [open]);
+  const bgClass = useMemo(
+    () => (open ? "tch-wrap open " : "tch-wrap "),
+    [open]
+  );
 
   return (
     <motion.div
@@ -198,6 +214,7 @@ const Home: React.FC = () => {
       exit="exit"
     >
       {/* 배경 */}
+      <div className="tch-bg-metal  is-brushed" />
       <div className="tch-bg-grad" />
       <div className="tch-bg-vignette" />
       <div className="tch-bg-grain" />
@@ -225,7 +242,7 @@ const Home: React.FC = () => {
         >
           <ambientLight intensity={0.65} />
           <directionalLight position={[6, 8, 6]} intensity={0.9} castShadow />
-          <Environment preset="city" />
+          <Environment preset="park" blur={0.8} />
           <ContactShadows
             position={[0, -1.2, 0]}
             opacity={0.22}
