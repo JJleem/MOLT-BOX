@@ -1,18 +1,18 @@
 import React from "react";
-import "../../styles/cascadingCard.scss";
+import "../../styles/cascadingreverse.scss";
 
 const IMG_COUNT = 40; // 0~23 이미지가 있다고 하셨던 맥락 반영
 
-const CascadingCardOrigin = () => {
+const CascadingCardReverse = () => {
   const containerCount = 5;
   const cardCount = 10;
   type StyleWithVars = React.CSSProperties & Record<"--dur", string>;
   return (
-    <div className="test2-container origin">
+    <div className="test2-container reverse">
       <div className="container">
         {Array.from({ length: containerCount }).map((_, i) => {
           // 칼럼별 속도 차이
-          const dur = i % 2 === 0 ? 30 : 25;
+          const dur = i % 2 === 0 ? 28 : 30;
 
           return (
             <div
@@ -214,4 +214,4 @@ const CascadingCardOrigin = () => {
   );
 };
 
-export default CascadingCardOrigin;
+export default CascadingCardReverse;

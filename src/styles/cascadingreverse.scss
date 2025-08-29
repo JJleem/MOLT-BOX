@@ -7,12 +7,22 @@
   gap: 16px;
   background: #fff;
 }
-
-.container {
+.icon {
+  width: 300px;
+  height: 300px;
+  background: #000;
+  z-index: 2;
+  position: absolute;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.reverse .container {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  flex-direction: column;
+  width: 90%;
   height: 100vh;
   overflow: hidden;
   gap: 16px;
@@ -20,10 +30,10 @@
 
   /* 마스크는 브라우저에 따라 루프 순간 컴포지팅 이슈가 있을 수 있어요.
      깜빡임이 남으면 아래 마스크를 잠시 꺼보며 비교해보세요. */
-  --top: 150px;
-  --bottom: 150px;
-  --left: 300px;
-  --right: 300px;
+  --top: 50px;
+  --bottom: 50px;
+  --left: 100px;
+  --right: 100px;
 
   mask-image: linear-gradient(
       to bottom,
@@ -49,7 +59,7 @@
 }
 
 /* 불연속 점프 유발하던 애니메이션 제거 */
-.card-container {
+.reverse .card-container {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -58,7 +68,7 @@
 }
 
 /* 카드 자체 스타일 */
-.card {
+.reverse .card {
   width: 300px;
   height: 200px;
   position: relative;
@@ -69,6 +79,9 @@
   transition: box-shadow 0.3s, border-color 0.3s, opacity 0.3s;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+  z-index: 1; /* 기본은 아이콘 아래 */
+  animation: zLayerPhase var(--dur, 30s) linear infinite;
+  animation-delay: var(--dodge-delay, 0s); /* JS에서 카드별로 주는 딜레이 */
 
   &:hover {
     border-color: #c9c9c9;
@@ -145,32 +158,29 @@
 }
 
 /* ✅ 진짜 무한 루프는 여기서만 수행 */
-.track {
+.reverse .track {
   display: grid;
-  grid-auto-rows: 200px;
-  gap: 16px;
+  grid-auto-flow: column; /* ⬅️ 가로로 아이템 쌓기 */
+  grid-auto-columns: 300px; /* ⬅️ 카드 너비와 동일해야 심(seam) 없음 */
+  gap: 16px; /* 카드 사이 간격 */
   will-change: transform;
-  animation: marqueeY3 var(--dur, 20s) linear infinite;
+  animation: marqueeX3_lr var(--dur, 30s) linear infinite;
   backface-visibility: hidden;
   transform: translateZ(0);
+  animation-direction: normal !important; /* 명시적으로 통일 */
 }
 
-/* 칼럼별 방향/속도 변주 */
-.card-container:nth-child(2n) .track {
-  animation-direction: reverse;
-}
-.card-container:nth-child(3n) .track {
+.reverse .card-container:nth-child(3n) .track {
   animation-duration: calc(var(--dur, 20s) * 0.85);
 }
-
 /* 무한 루프: 정확히 절반(-50%)만 이동하면 끊김 없이 반복 */
-@keyframes marqueeY3 {
+@keyframes marqueeX3_lr {
   from {
     transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(0, -33.3333%, 0);
-  }
+    transform: translate3d(-33.3333%, 0, 0);
+  } /* 모두 같은 방향 */
 }
 
 /* 접근성: 모션 최소화 */
@@ -191,30 +201,17 @@
   pointer-events: none;
 }
 
-/* 스냅 스크롤 컨테이너 */
-.WholeContainer {
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory; /* 휠/터치로 한 섹션씩 착 */
-  scroll-behavior: smooth;
-  overscroll-behavior: contain;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 각 섹션(한 화면 크기) */
-.SnapSection {
-  height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always; /* 중간에 멈추지 말고 꼭 스냅 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* (선택) 내부 컴포넌트가 자체 100vh/마스크/오버플로우로 스냅을 방해하면 정리 */
-.SnapSection .container {
-  /* 필요 시 주석 해제해서 사용 */
-  /* height: auto; */
-  /* overflow: visible; */
-  /* mask: none; -webkit-mask-image: none; */
+@keyframes zLayerPhase {
+  0%,
+  44% {
+    z-index: 1;
+  } /* 아이콘 아래 */
+  45%,
+  58% {
+    z-index: 3;
+  } /* 아이콘 위 (딱 회피 구간) */
+  59%,
+  100% {
+    z-index: 1;
+  } /* 다시 아래 */
 }

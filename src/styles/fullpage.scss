@@ -1,0 +1,40 @@
+/* src/styles/fullpage.scss */
+.fullpage-container {
+  height: 100vh;
+  overflow: hidden;
+}
+.fullpage-swiper {
+  height: 100%;
+}
+
+.fullpage-swiper .swiper,
+.fullpage-swiper .swiper-wrapper,
+.fullpage-swiper .swiper-slide {
+  transform: translateZ(0); /* 합성층 생성 */
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.fullpage-slide-inner {
+  width: 100%;
+}
+.fullpage-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 전환 중 내부 애니메이션 잠깐 멈춤 (클래스는 위 onSlideChange*에서 토글) */
+.is-sliding .reverse .track,
+.is-sliding .origin .track {
+  animation-play-state: paused;
+}
+
+/* 내부 섹션이 자체 스크롤/마스크 있으면 끊김 유발 → 전환용 화면에선 제거 추천 */
+.SnapSection .container {
+  /* 필요 시:
+  height: auto;
+  overflow: visible;
+  mask: none;
+  -webkit-mask-image: none;
+  */
+}
