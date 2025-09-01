@@ -71,7 +71,7 @@ const Cube: React.FC<{ open: boolean; onToggle: () => void }> = ({
     config: { tension: 150, friction: 17 },
   });
   const p = {
-    color: "#267899", // Anodized Violet
+    color: "#870bcf", // Anodized Violet
     roughness: 0,
     metalness: 0.4,
     envMapIntensity: 0.35,

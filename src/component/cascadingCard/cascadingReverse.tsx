@@ -20,6 +20,10 @@ const CascadingCardReverse = () => {
               className="card-container"
               style={{ "--dur": `${dur}s` } as StyleWithVars}
             >
+              <div className="card-title">
+                <p>Molt</p>
+                <span>Frontend Developer</span>
+              </div>
               {/* ⬇️ 무한 루프용 트랙: 동일 컨텐츠 2회 렌더 */}
               <div className="track">
                 {Array.from({ length: 3 }).map((_, dup) => (
@@ -184,7 +188,6 @@ const CascadingCardReverse = () => {
                                   transformOrigin: "0px 0px",
                                 }}
                               ></path>
-
                               <path
                                 className="will-change-transform"
                                 d="m117.665 194.349 93.505-19.143 72.89 13.253v156.09H127.97L100 267.976l17.665-73.627Z"
