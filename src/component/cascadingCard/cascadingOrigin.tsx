@@ -4,7 +4,7 @@ import "../../styles/cascadingCard.scss";
 const IMG_COUNT = 40; // 0~23 이미지가 있다고 하셨던 맥락 반영
 
 const CascadingCardOrigin = () => {
-  const containerCount = 5;
+  const containerCount = 7;
   const cardCount = 10;
   type StyleWithVars = React.CSSProperties & Record<"--dur", string>;
   return (

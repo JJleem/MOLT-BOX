@@ -53,7 +53,6 @@ const CascadingCardReverse = () => {
                               </div>
                             </div>
                           </div>
-
                           <svg
                             className="testsvg"
                             fill="none"

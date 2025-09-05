@@ -25,7 +25,7 @@ export default function RouterView() {
   };
   return (
     <main className="main">
-      <div className="global-bg" />
+      <div className="tch-bg-metal is-brushed" />
       <AnimatePresence mode="wait" initial={false}>
         {/* ⬇️ Routes를 motion.div로 감싸고, 여기에 key를 준다 */}
         <motion.div

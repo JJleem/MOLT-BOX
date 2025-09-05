@@ -71,7 +71,7 @@ const Cube: React.FC<{ open: boolean; onToggle: () => void }> = ({
     config: { tension: 150, friction: 17 },
   });
   const p = {
-    color: "#870bcf", // Anodized Violet
+    color: "#1761b6", // Anodized Violet
     roughness: 0,
     metalness: 0.4,
     envMapIntensity: 0.35,
@@ -214,14 +214,12 @@ const Home: React.FC = () => {
       exit="exit"
     >
       {/* 배경 */}
-      <div className="tch-bg-metal  is-brushed" />
-      <div className="tch-bg-grad" />
+      {/* <div className="tch-bg-metal  is-brushed" /> */}
+      {/* <div className="tch-bg-grad" />
       <div className="tch-bg-vignette" />
-      <div className="tch-bg-grain" />
-
+      <div className="tch-bg-grain" /> */}
       {/* 우측 패널 (닫기 콜백 전달) */}
       <RightPanel open={open} onClose={() => setOpen(false)} />
-
       {/* 3D 씬: 퇴장 애니메이션 적용 래퍼 */}
       <motion.div className="tch-scene" variants={sceneExit}>
         <Canvas
