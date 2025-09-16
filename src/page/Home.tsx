@@ -47,6 +47,7 @@ const links = [
   },
   { name: "GradientHover", route: "/gradient-hover", gif: "gradientHover.gif" },
   { name: "HoverVideo", route: "/hover-video", gif: "hoverVideo.gif" },
+  { name: "ScrollInfo", route: "/scroll-info", gif: "hoverVideo.gif" },
 ];
 
 /* ────────────── 큐브 ────────────── */
