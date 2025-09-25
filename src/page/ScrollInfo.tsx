@@ -36,7 +36,7 @@ const MOCK_DB: CommentItem[] = Array.from({ length: 123 }, (_, i) => {
 });
 
 async function mockFetchComments(page: number): Promise<ApiResponse> {
-  const PAGE_SIZE = 20;
+  const PAGE_SIZE = 5;
   const start = page * PAGE_SIZE;
   const end = start + PAGE_SIZE;
   const slice = MOCK_DB.slice(start, end);
