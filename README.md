@@ -92,3 +92,18 @@ Three.js 기반으로 구현된 몰입형 클라우드 애니메이션 컴포넌
 - **간단한 사용:** `/public/videos/1~n.mp4` 준비 → 컴포넌트의 `cols` 배열만 수정
 
 ![HoverVideo Demo](./assets/gif/hoverVideo.gif)
+
+## Infinite Scroll
+
+가상 스크롤과 무한 로딩을 결합한 **댓글 리스트형 UI 컴포넌트**입니다.  
+`@tanstack/react-virtual`로 DOM을 최소화하고, `useInfiniteQuery`로 페이지 단위 데이터를 이어서 가져옵니다. 스크롤 이동은 `framer-motion` 스프링으로 **자연스럽게 보간**합니다.
+
+- **가상화 + 무한 로딩:** `react-virtual`로 렌더 수 최소화, 리스트 하단에서 자동 `fetchNextPage()` 호출
+- **가변 높이 대응:** `measureElement` 실측으로 메시지 길이에 따른 **동적 높이** 정확 처리
+- **부드러운 이동감:** `useSpring(v.start)`로 스크롤 포지션 변화를 **스무스하게** 보정
+- **로더/끝 표시:** 가상 아이템으로 **Loading / End** 행을 함께 렌더링
+- **접근성:** `useReducedMotion()`으로 **모션 최소화 설정** 존중
+- **성능 최적화:** `overscan` 선렌더 + `will-change: transform`으로 스크롤 성능 향상
+- **간단한 사용:** 데모의 `mockFetchComments` → 실제 API로 `queryFn`만 교체하면 바로 적용
+
+![Infinite Scroll Demo](./assets/gif/infiniteScroll.gif)
