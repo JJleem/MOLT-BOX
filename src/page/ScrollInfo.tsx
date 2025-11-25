@@ -17,7 +17,7 @@ type ApiResponse = { items: CommentItem[]; nextPage?: number };
 
 const AUTHORS = ["Daisy", "Evan", "Noah", "Liam", "Olivia", "Mia", "Leo"];
 const AVATAR = (seed: number) =>
-  `https://api.dicebear.com/8.x/shapes/svg?seed=${seed}&size=64`;
+  `https://api.dicebear.com/9.x/avataaars/svg?seed=${seed}&size=64`;
 
 const MOCK_DB: CommentItem[] = Array.from({ length: 123 }, (_, i) => {
   const author = AUTHORS[i % AUTHORS.length];
