@@ -1,0 +1,260 @@
+.spinner-wrapper {
+  position: relative;
+  width: 50px; // 전체 크기
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 1. 회전하는 링 (흔들림 없이 딱 잡아주는 스타일)
+.spinner-ring {
+  position: absolute;
+  inset: 0; // top, right, bottom, left: 0 과 동일 (꽉 채우기)
+  border-radius: 50%;
+
+  // ✨ 색상 구현: 노랑(#ffeb3b)에서 빨강(#f44336)으로
+  // transparent 부분 덕분에 'C'자 모양이 됩니다.
+  background: conic-gradient(
+    from 0deg,
+    transparent 15%,
+    #ffeb3b 30%,
+    #f44336 100%
+  );
+
+  // ✨ 도넛 모양 만들기 (가운데 구멍 뚫기)
+  // 두께 조절: '4px' 숫자를 바꾸면 링 두께가 바뀝니다.
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #fff calc(100% - 4px + 1px)
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    #fff calc(100% - 4px + 1px)
+  );
+
+  // 단순 회전 애니메이션
+  animation: spinSimple 1s linear infinite;
+}
+
+// 2. 가운데 고정 아이콘 (같이 돌지 않음!)
+.spinner-logo {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  z-index: 5;
+  object-fit: contain;
+}
+
+@keyframes spinSimple {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// elastic-spinner.scss
+.chatbot-whole-container {
+  height: 100vh;
+  overflow: hidden;
+  border: 1px solid #f00 !important;
+  z-index: 1;
+  position: relative;
+}
+// 전체 레이아웃
+.chatbot-container {
+  width: 100%;
+  max-width: 600px;
+  z-index: 1;
+  height: 80vh; // 화면 높이의 80%
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 헤더
+.chat-header {
+  padding: 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
+  }
+}
+
+// 메시지 리스트 영역
+.messages-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// 개별 메시지 행
+.message-row {
+  display: flex;
+
+  &.user {
+    justify-content: flex-end; // 사용자는 오른쪽
+    .message-bubble {
+      background-color: #2b5bf7; // 파란색 (Carima 느낌)
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+  }
+
+  &.bot {
+    justify-content: flex-start; // 봇은 왼쪽
+    .message-bubble {
+      background-color: #ffffff;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-bottom-left-radius: 4px;
+    }
+  }
+}
+
+// 말풍선 공통 스타일
+.message-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap; // 줄바꿈 허용
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+// 입력 영역
+.input-area {
+  display: flex;
+  padding: 16px;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  gap: 10px;
+
+  input {
+    flex: 1;
+    padding: 12px;
+    border-radius: 24px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #2b5bf7;
+    }
+  }
+
+  button {
+    padding: 0 20px;
+    border-radius: 24px;
+    background-color: #2b5bf7;
+    color: white;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: #1a4bd6;
+    }
+
+    &:disabled {
+      background-color: #a0c0f0;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// --- [로딩 스피너 관련 스타일] ---
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #e0e0e0;
+}
+
+.thinking-text {
+  font-size: 0.85rem;
+  color: #666;
+  animation: pulse 1.5s infinite;
+}
+
+// 스피너 원본 스타일 (조금 수정하여 크기 조절 용이하게)
+.spinner-wrapper {
+  position: relative;
+  width: 40px; // 채팅창 내에서 적절한 크기
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-svg {
+  width: 100%;
+  height: 100%;
+  animation: rotate 2s linear infinite;
+}
+
+.spinner-circle {
+  fill: none;
+  stroke-width: 4; // 선 두께
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+// 애니메이션 키프레임
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

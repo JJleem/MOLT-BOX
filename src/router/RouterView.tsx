@@ -9,6 +9,7 @@ import HoverVideo from "../page/HoverVideo";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import ScrollInfo from "../page/ScrollInfo";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ChatBot from "../page/ChatBot";
 
 export default function RouterView() {
   const location = useLocation();
@@ -52,6 +53,7 @@ export default function RouterView() {
               <Route path="/gradient-hover" element={<GradientHover />} />
               <Route path="/hover-video" element={<HoverVideo />} />
               <Route path="/scroll-info" element={<ScrollInfo />} />
+              <Route path="/chat-bot" element={<ChatBot />} />
             </Routes>
           </motion.div>
         </AnimatePresence>
